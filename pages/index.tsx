@@ -152,6 +152,17 @@ const Home = () => {
             </div>
           </div>
         </div>
+        <div className={style.section}>
+          <div className={style.section_container}>
+            <div className={style.location}>
+              <div className={style.title}>
+                <h1>The way to come</h1>
+              </div>
+              <div className={style.map}>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div className={style.footer}>
         <div className={style.footer_container}>
