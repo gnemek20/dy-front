@@ -1,6 +1,7 @@
 import { StaticImport } from "next/dist/shared/lib/get-img-props"
 import Image from "next/image"
 import style from "@/styles/home.module.scss"
+import { useState } from "react";
 
 const Home = () => {
   type image_type = StaticImport;
@@ -9,39 +10,26 @@ const Home = () => {
     name: string,
     image: image_type,
   }
-  interface about_products_props {
-    name: string,
-    description: string,
-  }
 
   const logo_image: image_props = {
     name: 'logo',
     image: require("@/public/images/DY.svg"),
   }
 
-  const header_menus: Array<string> = ['Home', 'About', 'Contact'];
-  const about_products: Array<about_products_props> = [
-    {
-      name: "지퍼",
-      description: "완전 개쩌는 감각의 디자인",
-    },
-    {
-      name: "주머니",
-      description: "있는 듯 없는 듯 하지만 무한한 수납 공간",  
-    },
-    {
-      name: "단추",
-      description: "손만 닿으면 꿰어져 있는 마술",
-    }
-  ];
+  const header_menu_list: Array<string> = ['Home', 'About', 'Contact'];
+  const about_product_list: Array<string> = ['지퍼', '주머니', '단추'];
+
+  const [hovered_product, set_hovered_product] = useState<string>('');
 
   const clicked_logo = () => {
     window.location.reload();
   }
 
-  const onMouseEnter_about_product = () => {
+  const onMouseEnter_about_product = (product: string) => {
+    set_hovered_product(product);
   }
   const onMouseLeave_about_product = () => {
+    set_hovered_product('');
   }
 
   return (
@@ -53,7 +41,7 @@ const Home = () => {
           </div>
           <div className={style.header_menu}>
             {
-              header_menus.map((menu, index) => (
+              header_menu_list.map((menu, index) => (
                 <h3 key={index}>{menu}</h3>
               ))
             }
@@ -82,14 +70,20 @@ const Home = () => {
             <div className={style.about_bottom}>
               <div className={style.about_products}>
                 {
-                  about_products.map((product, index) => (
-                    <div className={style.product} key={index} onMouseEnter={onMouseEnter_about_product} onMouseLeave={onMouseLeave_about_product}>
-                      <div className="flex justify_center">
-                        <h4>마우스를 올려 확인해보세요</h4>
-                      </div>
-                      <div className={style.introduce}>
-                        <h1>{product.name}</h1>
-                      </div>
+                  about_product_list.map((product, index) => (
+                    <div className={style.product} key={index} onMouseEnter={() => onMouseEnter_about_product(product)} onMouseLeave={onMouseLeave_about_product}>
+                      {
+                        !hovered_product.includes(product) && (
+                          <>
+                            <div className={style.introduce}>
+                              <h1>{product}</h1>
+                            </div>
+                            <div className={style.hover_me}>
+                              <h4>마우스를 올려 확인해보세요</h4>
+                            </div>
+                          </>
+                        )
+                      }
                     </div>
                   ))
                 }
