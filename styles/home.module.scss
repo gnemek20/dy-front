@@ -84,7 +84,7 @@
       .about_bottom {
         display: flex;
         
-        .about_products {
+        .about_product_list {
           width: 100%;
           display: grid;
           grid-template-columns: repeat(3, 1fr);
@@ -117,6 +117,31 @@
               justify-content: center;
               width: 100%;
             }
+          }
+        }
+      }
+
+      // why section
+      .why_title {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        margin-bottom: 75px;
+      }
+      .why_reason_list {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 75px;
+
+        .reason {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+
+          hr {
+            border: none;
+            border-top: 1px solid var(--normal-gray);
           }
         }
       }

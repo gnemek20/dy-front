@@ -5,10 +5,17 @@ import { useState } from "react";
 
 const Home = () => {
   type image_type = StaticImport;
+  type menu_list_type = 'Home' | 'About' | 'Contact';
+  type product_list_type = '지퍼' | '주머니' | '단추';
+  type reason_list_type = 'Service' | 'Perfection' | 'Dummy'
 
   interface image_props {
     name: string,
     image: image_type,
+  }
+  interface reason_list_props {
+    title: reason_list_type,
+    descrtiption: string,
   }
 
   const logo_image: image_props = {
@@ -16,8 +23,27 @@ const Home = () => {
     image: require("@/public/images/DY.svg"),
   }
 
-  const header_menu_list: Array<string> = ['Home', 'About', 'Contact'];
+  const header_menu_list: Array<menu_list_type> = ['Home', 'About', 'Contact'];
   const about_product_list: Array<string> = ['지퍼', '주머니', '단추'];
+
+  const why_reason_list: Array<reason_list_props> = [
+    {
+      title: 'Perfection',
+      descrtiption: '일단은 아무말이나 막 채워둔 다음에 워딩은 다음번에 생각하면 됨. 대충 어떤식으로 나오는지 확인하기 위함임!'
+    },
+    {
+      title: 'Service',
+      descrtiption: '일단은 아무말이나 막 채워둔 다음에 워딩은 다음번에 생각하면 됨. 대충 어떤식으로 나오는지 확인하기 위함임!',
+    },
+    {
+      title: 'Dummy',
+      descrtiption: 'Dummy1',
+    },
+    {
+      title: 'Dummy',
+      descrtiption: 'Dummy2',
+    }
+  ];
 
   const [hovered_product, set_hovered_product] = useState<string>('');
 
@@ -68,7 +94,7 @@ const Home = () => {
               </div>
             </div>
             <div className={style.about_bottom}>
-              <div className={style.about_products}>
+              <div className={style.about_product_list}>
                 {
                   about_product_list.map((product, index) => (
                     <div className={style.product} key={index} onMouseEnter={() => onMouseEnter_about_product(product)} onMouseLeave={onMouseLeave_about_product}>
@@ -93,7 +119,22 @@ const Home = () => {
         </div>
         <div className={style.section}>
           <div className={style.section_container}>
-
+            <div className={style.why_title}>
+              <h5>WHY?</h5>
+              <h1>We're the best in the business</h1>
+              <h3>The points of DY</h3>
+            </div>
+            <div className={style.why_reason_list}>
+              {
+                why_reason_list.map((reason, index) => (
+                  <div className={style.reason} key={index}>
+                    <h2>{reason.title}</h2>
+                    <hr />
+                    <h4>{reason.descrtiption}</h4>
+                  </div>
+                ))
+              }
+            </div>
           </div>
         </div>
       </div>
