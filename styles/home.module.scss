@@ -198,6 +198,73 @@
           background-color: var(--dark-gray);
         }
       }
+      .contact {
+        display: flex;
+        flex-direction: column;
+
+        .menu {
+          display: flex;
+          margin-bottom: 50px;
+          gap: 50px;
+
+          * {
+            cursor: pointer;
+            padding: 10px 20px;
+            border: 1px solid var(--normal-gray);
+            border-radius: 10px;
+          }
+          *:hover {
+            color: var(--white);
+            background-color: var(--dark-gray);
+            border-color: var(--dark-gray);
+          }
+        }
+        .form {
+          display: flex;
+
+          .left {
+            flex: 1.25;
+            display: flex;
+            flex-direction: column;
+            padding: 5px;
+            gap: 5px;
+          }
+          .right {
+            flex: 3;
+            display: flex;
+            flex-direction: column;
+            padding: 5px;
+            
+            .title {
+              margin-bottom: 20px;
+            }
+            .inputs {
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+
+              * {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+
+                input {
+                  padding: 10px;
+                  border: 1px solid var(--normal-gray);
+                  border-radius: 5px;
+                }
+                textarea {
+                  padding: 10px;
+                  border: 1px solid var(--normal-gray);
+                  border-radius: 5px;
+                  overflow-y: scroll;
+                  resize: vertical;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

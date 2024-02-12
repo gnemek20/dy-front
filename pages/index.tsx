@@ -163,6 +163,42 @@ const Home = () => {
             </div>
           </div>
         </div>
+        <div className={style.section}>
+          <div className={style.section_container}>
+            <div className={style.contact}>
+              <div className={style.menu}>
+                <h3>Contact Us</h3>
+                <h3>Get Support</h3>
+              </div>
+              <div className={style.form}>
+                <div className={style.left}>
+                  <h4>ADDR: 지구</h4>
+                  <h4>TEL: 010-3744-3084</h4>
+                </div>
+                <div className={style.right}>
+                  <div className={style.title}>
+                    <h1>Form</h1>
+                    <h5>Send us a message and we'll get back to you as soon as we can!</h5>
+                  </div>
+                  <div className={style.inputs}>
+                    <div className={style.name}>
+                      <h4>Name</h4>
+                      <input type="text" placeholder="Enter your name" />
+                    </div>
+                    <div className={style.email}>
+                      <h4>Phone Number</h4>
+                      <input type="text" placeholder="Enter your phone number" />
+                    </div>
+                    <div className={style.message}>
+                      <h4>Message</h4>
+                      <textarea rows={10}></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div className={style.footer}>
         <div className={style.footer_container}>
