@@ -1,0 +1,41 @@
+.flex {
+  display: flex;
+}
+
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
+}
+
+.max_width {
+  width: 100%;
+}
+.max_height {
+  height: 100%;
+}
+
+.justify_center {
+  justify-content: center;
+}
+.align_center {
+  align-items: center;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+  --max-width: 1200px;
+
+  --white: white;
+
+  --light-gray: #fcfcfc;
+  --normal-gray: #ebebeb;
+  --dark-gray: #242424;
+
+  --invert-hover: 0.8;
+}
