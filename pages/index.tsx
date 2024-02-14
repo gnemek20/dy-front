@@ -158,10 +158,10 @@ const Home = () => {
       }
       else if (scroll_top >= page_height && scroll_top < page_height * 6) {
         // 1번째 페이지로 이동
-        home_div_ref.current?.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
+        // home_div_ref.current?.scrollTo({
+        //   top: 0,
+        //   behavior: 'smooth'
+        // });
       }
 
     }
@@ -172,10 +172,11 @@ const Home = () => {
   
   const [a, sa] = useState<string>('0px');
   const set_vh = () => {
-    document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`);
+    // document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`);
+    document.documentElement.style.setProperty('--vh', `${window.outerHeight}px`);
     sa(`${window.innerHeight}px`);
   }
-
+  
   useEffect(() => {
     window.addEventListener('resize', set_vh);
     set_vh();
