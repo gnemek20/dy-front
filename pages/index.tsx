@@ -152,8 +152,7 @@ const Home = () => {
       else if (scroll_top >= page_height && scroll_top < page_height * 5) {
         // 6번째 페이지로 이동
         home_div_ref.current?.scrollTo({
-          // top: page_height * 5,
-          top: page_height * 10,
+          top: page_height * 5,
           behavior: 'smooth'
         });
       }

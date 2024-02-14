@@ -315,7 +315,9 @@
   }
 
   .footer {
-    display: none !important;
+    // display: none !important;
+    padding: 500px 0px;
+    background-color: var(--white);
   }
 
   // Flicking List
