@@ -1,7 +1,7 @@
 import { StaticImport } from "next/dist/shared/lib/get-img-props"
 import Image from "next/image"
 import style from "@/styles/home.module.scss"
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const Home = () => {
   type image_type = StaticImport;
@@ -24,7 +24,7 @@ const Home = () => {
   }
 
   const header_menu_list: Array<menu_list_type> = ['Home', 'About', 'Contact'];
-  const about_product_list: Array<string> = ['지퍼', '주머니', '단추'];
+  const about_product_list: Array<product_list_type> = ['지퍼', '주머니', '단추'];
 
   const why_reason_list: Array<reason_list_props> = [
     {
@@ -33,7 +33,10 @@ const Home = () => {
     },
     {
       title: 'Service',
-      descrtiption: '일단은 아무말이나 막 채워둔 다음에 워딩은 다음번에 생각하면 됨. 대충 어떤식으로 나오는지 확인하기 위함임!',
+      descrtiption: [
+        `고객의 만족을 위해`,
+        `끊임없이 노력하겠습니다.`
+      ].join('\n'),
     },
     {
       title: 'Dummy',
@@ -44,6 +47,8 @@ const Home = () => {
       descrtiption: 'Dummy2',
     }
   ];
+
+  const home_div_ref = useRef<HTMLDivElement>(null);
 
   const [hovered_product, set_hovered_product] = useState<string>('');
 
@@ -58,8 +63,125 @@ const Home = () => {
     set_hovered_product('');
   }
 
+  let before_scroll_y = 0;
+  const mobile_touch_move_prevent = (event: TouchEvent) => {
+    event.preventDefault();
+  }
+  const mobile_touch_start = (event: TouchEvent) => {
+    const touch_y = event.changedTouches[0].pageY;
+    before_scroll_y = touch_y;
+
+    home_div_ref.current?.removeEventListener('touchstart', mobile_touch_move);
+    home_div_ref.current?.addEventListener('touchmove', mobile_touch_move);
+  }
+  const mobile_touch_move = (event: TouchEvent) => {
+    const page_height = window.innerHeight;
+    const scroll_top = home_div_ref.current?.scrollTop ? home_div_ref.current?.scrollTop : 0;
+    const scroll_y = event.changedTouches[0].pageY;
+    
+    if (before_scroll_y < scroll_y) {
+      // 아래로 스크롤 중이면
+      before_scroll_y = scroll_y;
+      if (scroll_top >= 0 && scroll_top < page_height * 2) {
+        // 1번째 페이지로 이동
+        home_div_ref.current?.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }
+      else if (scroll_top >= page_height && scroll_top < page_height * 3) {
+        // 2번째 페이지로 이동
+        home_div_ref.current?.scrollTo({
+          top: page_height,
+          behavior: 'smooth'
+        })
+      }
+      else if (scroll_top >= page_height && scroll_top < page_height * 4) {
+        // 3번째 페이지로 이동
+        home_div_ref.current?.scrollTo({
+          top: page_height * 2,
+          behavior: 'smooth'
+        })
+      }
+      else if (scroll_top >= page_height && scroll_top < page_height * 5) {
+        // 4번째 페이지로 이동
+        home_div_ref.current?.scrollTo({
+          top: page_height * 3,
+          behavior: 'smooth'
+        })
+      }
+      else if (scroll_top >= page_height && scroll_top < page_height * 6) {
+        // 5번째 페이지로 이동
+        home_div_ref.current?.scrollTo({
+          top: page_height * 4,
+          behavior: 'smooth'
+        })
+      }
+    }
+    else if (before_scroll_y > scroll_y) {
+      // 위로 스크롤 중이면
+      before_scroll_y = scroll_y;
+      if (scroll_top >= 0 && scroll_top < page_height) {
+        // 2번째 페이지로 이동
+        home_div_ref.current?.scrollTo({
+          top: page_height,
+          behavior: 'smooth'
+        });
+      }
+      else if (scroll_top >= page_height && scroll_top < page_height * 2) {
+        // 3번째 페이지로 이동
+        home_div_ref.current?.scrollTo({
+          top: page_height * 2,
+          behavior: 'smooth'
+        });
+      }
+      else if (scroll_top >= page_height && scroll_top < page_height * 3) {
+        // 4번째 페이지로 이동
+        home_div_ref.current?.scrollTo({
+          top: page_height * 3,
+          behavior: 'smooth'
+        });
+      }
+      else if (scroll_top >= page_height && scroll_top < page_height * 4) {
+        // 5번째 페이지로 이동
+        home_div_ref.current?.scrollTo({
+          top: page_height * 4,
+          behavior: 'smooth'
+        });
+      }
+      else if (scroll_top >= page_height && scroll_top < page_height * 5) {
+        // 6번째 페이지로 이동
+        home_div_ref.current?.scrollTo({
+          top: page_height * 5,
+          behavior: 'smooth'
+        });
+      }
+      else if (scroll_top >= page_height && scroll_top < page_height * 6) {
+        // 1번째 페이지로 이동
+        home_div_ref.current?.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }
+
+    }
+
+    home_div_ref.current?.addEventListener('touchstart', mobile_touch_start);
+    home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move);
+  }
+
+  useEffect(() => {
+    home_div_ref.current?.addEventListener('touchstart', mobile_touch_start);
+    home_div_ref.current?.addEventListener('touchmove', mobile_touch_move_prevent);
+    return () => {
+      home_div_ref.current?.removeEventListener('touchstart', mobile_touch_move);
+      home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move);
+      home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move_prevent);
+    };
+  }, [])
+
   return (
-    <div className="Home">
+    <div ref={home_div_ref} className="home">
       <div className={style.header}>
         <div className={style.header_container}>
           <div className={style.header_title} onClick={clicked_logo}>
@@ -84,13 +206,19 @@ const Home = () => {
               <div className={style.about_theme}>
                 <div className={style.about_sub_theme}>
                   <h3>About DY</h3>
+                  {/* <h3>About 대양아이엔지</h3> */}
                 </div>
                 <div className={style.about_main_theme}>
                   <h1>What we make?</h1>
                 </div>
               </div>
               <div className={style.about_description}>
-                <h5>DY에서 만들어내는 제품들이 어떤 것들이 있는 지 대표적으로 3가지를 추출하여 소개할 것. 가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하가나다라마바사아자차카타파하</h5>
+                <h5>
+                  주식회사 대양아이엔지는 지퍼 전문, 패션소재 기업으로서<br />
+                  신뢰와 감동으로<br />
+                  함께 도전하고, 함께 꿈을 이루어가는<br />
+                  패션 리더 기업들의 믿음직한 파트너 입니다.
+                </h5>
               </div>
             </div>
             <div className={style.about_bottom}>
@@ -122,7 +250,9 @@ const Home = () => {
             <div className={style.why_title}>
               <h5>WHY?</h5>
               <h1>We{"\'"}re the best in the business</h1>
+              {/* <h1>꿈과 변화를 선도하는 패션 리더 기업들의</h1> */}
               <h3>The points of DY</h3>
+              {/* <h3>최고의 파트너</h3> */}
             </div>
             <div className={style.why_reason_list}>
               {
