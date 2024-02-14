@@ -170,7 +170,13 @@ const Home = () => {
     home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move);
   }
 
+  const [a, sa] = useState(0);
+  const [b, sb] = useState('');
+  
   useEffect(() => {
+    sa(window.innerHeight);
+    sb(document.documentElement.style.getPropertyValue('--vh'));
+
     page_height = window.innerHeight;
     home_div_ref.current?.addEventListener('touchstart', mobile_touch_start);
     home_div_ref.current?.addEventListener('touchmove', mobile_touch_move_prevent);
@@ -199,7 +205,8 @@ const Home = () => {
       </div>
       <div className={style.body}>
         <div className={style.banner}>
-          <h1>이곳에 배너가 들어가요!</h1>
+          {/* <h1>이곳에 배너가 들어가요!</h1> */}
+          <h1>{`${a}px, ${b}`}</h1>
         </div>
         <div className={`${style.section} ${style.about}`}>
           <div className={style.section_container}>

@@ -4,9 +4,16 @@ import Head from "next/head";
 import { useEffect } from "react";
 
 export default function App({ Component, pageProps }: AppProps) {
+  const set_vh = () => {
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`);
+  }
+
   useEffect(() => {
-    const vh = window.innerHeight;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    // const vh = window.innerHeight;
+    // document.documentElement.style.setProperty('--vh', `${vh}px`);
+    
+    window.addEventListener('resize', set_vh);
+    set_vh();
   }, []);
 
   return (
