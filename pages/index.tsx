@@ -64,6 +64,7 @@ const Home = () => {
   }
 
   let before_scroll_y = 0;
+  let page_height = 0;
   const mobile_touch_move_prevent = (event: TouchEvent) => {
     event.preventDefault();
   }
@@ -75,7 +76,6 @@ const Home = () => {
     home_div_ref.current?.addEventListener('touchmove', mobile_touch_move);
   }
   const mobile_touch_move = (event: TouchEvent) => {
-    const page_height = window.innerHeight;
     const scroll_top = home_div_ref.current?.scrollTop ? home_div_ref.current?.scrollTop : 0;
     const scroll_y = event.changedTouches[0].pageY;
     
@@ -171,6 +171,7 @@ const Home = () => {
   }
 
   useEffect(() => {
+    page_height = window.innerHeight;
     home_div_ref.current?.addEventListener('touchstart', mobile_touch_start);
     home_div_ref.current?.addEventListener('touchmove', mobile_touch_move_prevent);
     return () => {
