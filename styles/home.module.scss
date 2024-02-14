@@ -295,6 +295,14 @@
     min-height: -webkit-fill-available !important;
   }
 
+  .header_container {
+    padding: 5px 15px !important;
+
+    .header_menu {
+      display: none !important;
+    }
+  }
+
   // Flicking List
   .about_product_list {
     display: none !important;
@@ -320,6 +328,12 @@
 
   .why_title {
     margin-bottom: 50px !important;
+  }
+
+  .location {
+    .title {
+      margin-bottom: 10px !important;
+    }
   }
 
   .contact {
