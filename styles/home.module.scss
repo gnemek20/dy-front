@@ -33,10 +33,10 @@
       * {
         padding: 5px;
       }
-      *:hover {
-        cursor: pointer;
-        filter: invert(var(--invert-hover));
-      }
+      // *:hover {
+      //   cursor: pointer;
+      //   filter: invert(var(--invert-hover));
+      // }
     }
   }
 }
@@ -213,11 +213,11 @@
             border: 1px solid var(--normal-gray);
             border-radius: 10px;
           }
-          *:hover {
-            color: var(--white);
-            background-color: var(--dark-gray);
-            border-color: var(--dark-gray);
-          }
+          // *:hover {
+          //   color: var(--white);
+          //   background-color: var(--dark-gray);
+          //   border-color: var(--dark-gray);
+          // }
         }
         .form {
           display: flex;
@@ -286,6 +286,63 @@
     * {
       color: var(--white);
       margin: auto;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  // Flicking List
+  .about_product_list {
+    display: none !important;
+  }
+  .why_reason_list {
+    display: none !important;
+  }
+  .who {
+    display: none !important;
+  }
+
+  .section {
+    .section_container {
+      padding: 50px 15px !important;
+    }
+  }
+
+  .about_top {
+    gap: 10px !important;
+    flex-direction: column !important;
+    margin-bottom: 25px;
+  }
+
+  .why_title {
+    margin-bottom: 50px !important;
+  }
+
+  .contact {
+    .menu {
+      gap: 0px !important;
+      justify-content: space-between !important;
+      margin-bottom: 10px !important;
+    }
+    .form {
+      flex-direction: column !important;
+      gap: 25px !important;
+    }
+  }
+}
+
+@media (hover:hover) and (pointer:fine) {
+  .header_menu {
+    *:hover {
+      cursor: pointer;
+      filter: invert(var(--invert-hover));
+    }
+  }
+  .menu {
+    *:hover {
+      color: var(--white);
+      background-color: var(--dark-gray);
+      border-color: var(--dark-gray);
     }
   }
 }
