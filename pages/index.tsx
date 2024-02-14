@@ -172,9 +172,8 @@ const Home = () => {
   
   const [a, sa] = useState<string>('0px');
   const set_vh = () => {
-    // document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`);
-    document.documentElement.style.setProperty('--vh', `${window.outerHeight}px`);
-    sa(`${window.innerHeight}px`);
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`);
+    sa(`${window.outerHeight}px`);
   }
   
   useEffect(() => {
