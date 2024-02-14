@@ -68,7 +68,6 @@ const Home = () => {
     event.preventDefault();
   }
   const mobile_touch_start = (event: TouchEvent) => {
-    console.log(document.documentElement.style.getPropertyValue('--vh'));
     const touch_y = event.changedTouches[0].pageY;
     before_scroll_y = touch_y;
 
@@ -171,8 +170,10 @@ const Home = () => {
     home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move);
   }
   
+  const [a, sa] = useState<string>('0px');
   const set_vh = () => {
     document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`);
+    sa(`${window.innerHeight}px`);
   }
 
   useEffect(() => {
@@ -207,7 +208,8 @@ const Home = () => {
       </div>
       <div className={style.body}>
         <div className={style.banner}>
-          <h1>이곳에 배너가 들어가요!</h1>
+          {/* <h1>이곳에 배너가 들어가요!</h1> */}
+          <h1>{a}</h1>
         </div>
         <div className={`${style.section} ${style.about}`}>
           <div className={style.section_container}>
