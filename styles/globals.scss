@@ -39,6 +39,8 @@
   --dark-gray: #242424;
 
   --invert-hover: 0.8;
+
+  --vh: 100%;
 }
 
 @media screen and (max-width: 768px) {
@@ -47,8 +49,8 @@
   }
 
   .home {
-    // height: -webkit-fill-available !important;
     height: 100vh !important;
+    height: var(--vh);
     overflow-y: auto;
   }
   .home::-webkit-scrollbar {

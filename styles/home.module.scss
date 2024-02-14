@@ -327,10 +327,12 @@
 
   .banner {
     height: calc(100vh - 60px) !important;
+    height: calc(var(--vh) - 60px) !important;
   }
 
   .section {
     height: 100vh !important;
+    height: var(--vh) !important;
 
     .section_container {
       padding: 50px 15px !important;

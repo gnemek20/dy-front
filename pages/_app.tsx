@@ -1,8 +1,14 @@
 import "@/styles/globals.scss";
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import { useEffect } from "react";
 
 export default function App({ Component, pageProps }: AppProps) {
+  useEffect(() => {
+    const vh = window.innerHeight;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }, []);
+
   return (
     <div>
       <Head>
