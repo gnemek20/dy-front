@@ -64,11 +64,11 @@ const Home = () => {
   }
 
   let before_scroll_y = 0;
-  let page_height = 0;
   const mobile_touch_move_prevent = (event: TouchEvent) => {
     event.preventDefault();
   }
   const mobile_touch_start = (event: TouchEvent) => {
+    console.log(document.documentElement.style.getPropertyValue('--vh'));
     const touch_y = event.changedTouches[0].pageY;
     before_scroll_y = touch_y;
 
@@ -76,6 +76,7 @@ const Home = () => {
     home_div_ref.current?.addEventListener('touchmove', mobile_touch_move);
   }
   const mobile_touch_move = (event: TouchEvent) => {
+    const page_height = parseInt(document.documentElement.style.getPropertyValue('--vh').replace(/px/g, ''));
     const scroll_top = home_div_ref.current?.scrollTop ? home_div_ref.current?.scrollTop : 0;
     const scroll_y = event.changedTouches[0].pageY;
     
@@ -169,23 +170,24 @@ const Home = () => {
     home_div_ref.current?.addEventListener('touchstart', mobile_touch_start);
     home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move);
   }
-
-  const [a, sa] = useState(0);
-  const [b, sb] = useState('');
   
-  useEffect(() => {
-    sa(window.innerHeight);
-    sb(document.documentElement.style.getPropertyValue('--vh'));
+  const set_vh = () => {
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`);
+  }
 
-    page_height = window.innerHeight;
+  useEffect(() => {
+    window.addEventListener('resize', set_vh);
+    set_vh();
+
     home_div_ref.current?.addEventListener('touchstart', mobile_touch_start);
     home_div_ref.current?.addEventListener('touchmove', mobile_touch_move_prevent);
     return () => {
+      window.removeEventListener('resize', set_vh);
       home_div_ref.current?.removeEventListener('touchstart', mobile_touch_move);
       home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move);
       home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move_prevent);
     };
-  }, [])
+  }, []);
 
   return (
     <div ref={home_div_ref} className="home">
@@ -205,8 +207,7 @@ const Home = () => {
       </div>
       <div className={style.body}>
         <div className={style.banner}>
-          {/* <h1>이곳에 배너가 들어가요!</h1> */}
-          <h1>{`${a}px, ${b}`}</h1>
+          <h1>이곳에 배너가 들어가요!</h1>
         </div>
         <div className={`${style.section} ${style.about}`}>
           <div className={style.section_container}>
