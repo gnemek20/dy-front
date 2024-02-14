@@ -121,7 +121,7 @@ const Home = () => {
           <div className={style.section_container}>
             <div className={style.why_title}>
               <h5>WHY?</h5>
-              <h1>We're the best in the business</h1>
+              <h1>We{"\'"}re the best in the business</h1>
               <h3>The points of DY</h3>
             </div>
             <div className={style.why_reason_list}>
@@ -178,7 +178,7 @@ const Home = () => {
                 <div className={style.right}>
                   <div className={style.title}>
                     <h1>Form</h1>
-                    <h5>Send us a message and we'll get back to you as soon as we can!</h5>
+                    <h5>Send us a message and we{"\'"}ll get back to you as soon as we can!</h5>
                   </div>
                   <div className={style.inputs}>
                     <div className={style.name}>
