@@ -202,7 +202,7 @@ const Home = () => {
     map_ref.current = new naver.maps.Map('map', {
       center: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
       zoomControl: true,
-      zoom: 18
+      zoom: 15
     });
     new naver.maps.Marker({
       position: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
