@@ -2,6 +2,7 @@ import { StaticImport } from "next/dist/shared/lib/get-img-props"
 import Image from "next/image"
 import style from "@/styles/home.module.scss"
 import { useEffect, useRef, useState } from "react";
+import { getEventListeners } from "events";
 
 const Home = () => {
   type image_type = StaticImport;
@@ -68,13 +69,13 @@ const Home = () => {
   const mobile_touch_move_prevent = (event: TouchEvent) => {
     event.preventDefault();
   }
-  const mobile_touch_start = (event: TouchEvent) => {
+  const mobile_touch_start = (event: any) => {
     home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move);
-
+    
     const touch_y = event.changedTouches[0].pageY;
     before_scroll_y = touch_y;
 
-    home_div_ref.current?.addEventListener('touchmove', mobile_touch_move);
+    if (event.target.id !== 'map') home_div_ref.current?.addEventListener('touchmove', mobile_touch_move);
   }
   const mobile_touch_move = (event: TouchEvent) => {
     const offset = 50;
@@ -200,18 +201,15 @@ const Home = () => {
     window.addEventListener('resize', set_vh);
     set_vh();
 
-    home_div_ref.current?.addEventListener('touchstart', mobile_touch_start);
     home_div_ref.current?.addEventListener('touchmove', mobile_touch_move_prevent);
     return () => {
       window.removeEventListener('resize', set_vh);
-      home_div_ref.current?.removeEventListener('touchstart', mobile_touch_move);
-      home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move);
       home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move_prevent);
     };
   }, []);
 
   return (
-    <div ref={home_div_ref} className="home">
+    <div ref={home_div_ref} className="home" onTouchStart={(event) => mobile_touch_start(event)}>
       <div className={style.header}>
         <div className={style.header_container}>
           <div className={style.header_title} onClick={clicked_logo}>
