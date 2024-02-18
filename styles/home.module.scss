@@ -361,13 +361,15 @@
   .banner {
     // height: calc(100vh - 60px) !important;
     // height: calc(var(--vh) - 60px) !important;
-    height: 100vh !important;
-    height: var(--vh) !important;
+    // height: 100vh !important;
+    // height: var(--vh) !important;
+    height: -webkit-fill-available !important;
   }
 
   .section {
-    height: 100vh !important;
-    height: var(--vh) !important;
+    // height: 100vh !important;
+    // height: var(--vh) !important;
+    height: -webkit-fill-available !important;
 
     .section_container {
       padding: 50px 15px !important;
