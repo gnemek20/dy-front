@@ -2,7 +2,6 @@ import { StaticImport } from "next/dist/shared/lib/get-img-props"
 import Image from "next/image"
 import style from "@/styles/home.module.scss"
 import { useEffect, useRef, useState } from "react";
-import { getEventListeners } from "events";
 
 const Home = () => {
   type image_type = StaticImport;
@@ -53,16 +52,27 @@ const Home = () => {
 
   const [is_mobile, set_is_mobile] = useState<boolean>(false);
   const [hovered_product, set_hovered_product] = useState<string>('');
+  const [touched_product, set_touched_product] = useState<string>('');
 
   const clicked_logo = () => {
     window.location.reload();
   }
 
-  const onMouseEnter_about_product = (product: string) => {
+  const onMouseEnter_about_product = (product: product_list_type) => {
+    if (is_mobile) return;
+
     set_hovered_product(product);
   }
   const onMouseLeave_about_product = () => {
+    if (is_mobile) return;
+
     set_hovered_product('');
+  }
+  const onTouchEnd_about_product = (product: product_list_type) => {
+    if (!is_mobile) return;
+
+    if (touched_product.includes(product)) set_touched_product('');
+    else set_touched_product(product);
   }
 
   let before_scroll_y = 0;
@@ -172,13 +182,11 @@ const Home = () => {
     }
   }
   
-  const [a, sa] = useState<string>('0px');
   const set_vh = () => {
     if (window.innerWidth <= 768) set_is_mobile(true);
     else set_is_mobile(false);
 
     document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`);
-    sa(`${window.innerHeight}px`);
   }
 
   const map_ref = useRef<HTMLElement | null | any>(null);
@@ -228,8 +236,7 @@ const Home = () => {
       </div>
       <div className={style.body}>
         <div className={style.banner}>
-          {/* <h1>이곳에 배너가 들어가요!</h1> */}
-          <h1>{a}</h1>
+          <h1>이곳에 배너가 들어가요!</h1>
         </div>
         <div className={`${style.section} ${style.about}`}>
           <div className={style.section_container}>
@@ -256,15 +263,26 @@ const Home = () => {
               <div className={style.about_product_list}>
                 {
                   about_product_list.map((product, index) => (
-                    <div className={style.product} key={index} onMouseEnter={() => onMouseEnter_about_product(product)} onMouseLeave={onMouseLeave_about_product}>
+                    <div className={`${style.product} ${touched_product.includes(product) && style.touched_product}`} key={index} onMouseEnter={() => onMouseEnter_about_product(product)} onMouseLeave={onMouseLeave_about_product} onTouchEnd={() => onTouchEnd_about_product(product)}>
                       {
                         !hovered_product.includes(product) && (
                           <>
-                            <div className={style.introduce}>
-                              <h1>{product}</h1>
-                            </div>
+                            {
+                              (!touched_product.includes(product) || !is_mobile) && (
+                                <div className={style.introduce}>
+                                  <h1>{product}</h1>
+                                </div>
+                              )
+                            }
                             <div className={style.hover_me}>
-                              <h4>마우스를 올려 확인해보세요</h4>
+                              {
+                                touched_product.includes(product) && is_mobile ? (
+                                  <h4>대충 간단한 설명</h4>
+                                )
+                                : (
+                                  !is_mobile && <h4>마우스를 올려 확인해보세요</h4>
+                                )
+                              }
                             </div>
                           </>
                         )

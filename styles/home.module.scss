@@ -322,8 +322,33 @@
   }
 
   // Flicking List
-  .about_product_list {
-    display: none !important;
+  .about_bottom {
+    height: 100% !important;
+
+    .about_product_list {
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      height: 100% !important;
+
+      .product {
+        width: 40% !important;
+        height: 63px !important;
+        padding: 0px !important;
+        transition: all 500ms;
+        
+        .introduce {
+          padding: 10px !important;
+        }
+      }
+      .product:nth-child(2) {
+        margin-left: auto !important;
+      }
+      .touched_product {
+        width: 100% !important;
+        height: 100% !important;
+      }
+    }
   }
   .why_reason_list {
     display: none !important;
@@ -351,7 +376,7 @@
   .about_top {
     gap: 10px !important;
     flex-direction: column !important;
-    margin-bottom: 25px;
+    margin-bottom: 25px !important;
 
     .about_description {
       justify-content: start !important;
