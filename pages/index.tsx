@@ -70,7 +70,7 @@ const Home = () => {
     event.preventDefault();
   }
   const mobile_touch_start = (event: any) => {
-    console.log(event.target)
+    console.log(event)
     home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move);
     
     const touch_y = event.changedTouches[0].pageY;
