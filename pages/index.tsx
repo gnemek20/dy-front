@@ -377,7 +377,7 @@ const Home = () => {
                     </div>
                     <div className={style.email}>
                       <h4>Phone Number</h4>
-                      <input type="text" placeholder="Enter your phone number" />
+                      <input type="tel" placeholder="Enter your phone number" />
                     </div>
                     <div className={style.message}>
                       <h4>Message</h4>
