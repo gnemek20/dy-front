@@ -189,16 +189,6 @@ const Home = () => {
   }
   
   useEffect(() => {
-    map_ref.current = new naver.maps.Map('map', {
-      center: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
-      zoomControl: true,
-      zoom: 18
-    });
-    new naver.maps.Marker({
-      position: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
-      map: map_ref.current
-    });
-
     window.addEventListener('resize', set_vh);
     set_vh();
 
@@ -208,6 +198,18 @@ const Home = () => {
       home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move_prevent);
     };
   }, []);
+
+  useEffect(() => {
+    map_ref.current = new naver.maps.Map('map', {
+      center: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
+      zoomControl: true,
+      zoom: 18
+    });
+    new naver.maps.Marker({
+      position: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
+      map: map_ref.current
+    });
+  }, [ is_mobile ]);
 
   return (
     <div ref={home_div_ref} className="home" onTouchStart={(event) => mobile_touch_start(event)}>
