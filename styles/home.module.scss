@@ -197,16 +197,11 @@
         .title {
           margin-bottom: 25px;
         }
-        .map_area {
+        .map {
           display: flex;
           width: 100%;
           height: 500px;
           background-color: var(--dark-gray);
-
-          .map {
-            width: 100%;
-            height: 100%;
-          }
         }
       }
       .contact {
@@ -372,7 +367,7 @@
     .title {
       margin-bottom: 10px !important;
     }
-    .map_area {
+    .map {
       height: 50% !important;
     }
   }
