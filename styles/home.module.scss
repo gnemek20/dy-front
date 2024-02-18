@@ -406,6 +406,10 @@
     .form {
       flex-direction: column !important;
       gap: 25px !important;
+
+      .right {
+        display: none !important;
+      }
     }
   }
 }
