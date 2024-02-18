@@ -318,8 +318,8 @@ const Home = () => {
               <div className={style.title}>
                 <h1>The way to come</h1>
               </div>
-              <div id="map_area" className={style.map}>
-                <div id="map">
+              <div id="map_area" className={style.map_area}>
+                <div id="map" className={style.map}>
                 </div>
               </div>
               <div>
