@@ -298,7 +298,8 @@
 
 @media screen and (max-width: 768px) {
   .body {
-    min-height: -webkit-fill-available !important;
+    // min-height: -webkit-fill-available !important;
+    height: 100% !important;
     padding-top: 0px !important;
   }
 
