@@ -368,8 +368,8 @@
 
   .section {
     // height: 100vh !important;
-    // height: var(--vh) !important;
-    height: -webkit-fill-available !important;
+    height: var(--vh) !important;
+    // height: -webkit-fill-available !important;
 
     .section_container {
       padding: 50px 15px !important;

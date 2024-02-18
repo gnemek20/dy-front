@@ -197,7 +197,7 @@ const Home = () => {
   }
   
   useEffect(() => {
-    window.addEventListener('resize', set_vh);
+    // window.addEventListener('resize', set_vh);
     set_vh();
 
     home_div_ref.current?.addEventListener('touchmove', mobile_touch_move_prevent);
