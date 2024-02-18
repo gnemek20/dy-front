@@ -77,7 +77,7 @@ const Home = () => {
 
   let before_scroll_y = 0;
   const mobile_touch_move_prevent = (event: TouchEvent) => {
-    // event.preventDefault();
+    event.preventDefault();
   }
   const mobile_touch_start = (event: any) => {
     home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move);
@@ -86,7 +86,7 @@ const Home = () => {
     before_scroll_y = touch_y;
     
     if (event.target.className.includes('map')) return;
-    // else if (event.target.className.includes('home') || ['h1', 'h2', 'h3', 'h4', 'h5', 'input', 'textarea'].includes(event.target.tagName.toLowerCase())) home_div_ref.current?.addEventListener('touchmove', mobile_touch_move);
+    else if (event.target.className.includes('home') || ['h1', 'h2', 'h3', 'h4', 'h5', 'input', 'textarea'].includes(event.target.tagName.toLowerCase())) home_div_ref.current?.addEventListener('touchmove', mobile_touch_move);
   }
   const mobile_touch_move = (event: TouchEvent) => {
     const offset = 50;
