@@ -70,17 +70,12 @@ const Home = () => {
     event.preventDefault();
   }
   const mobile_touch_start = (event: any) => {
-    // console.log("부모: ", event.target.parentNode)
-    // console.log("자식: ", event.target.childNodes)
-    const a = document.getElementById('map');
-    console.log(a?.childNodes);
-
     home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move);
     
     const touch_y = event.changedTouches[0].pageY;
     before_scroll_y = touch_y;
 
-    if (event.target.id !== 'map') home_div_ref.current?.addEventListener('touchmove', mobile_touch_move);
+    if (event.target.className.includes('home') && !event.target.className.includes('map')) home_div_ref.current?.addEventListener('touchmove', mobile_touch_move);
   }
   const mobile_touch_move = (event: TouchEvent) => {
     const offset = 50;
