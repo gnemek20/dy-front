@@ -69,20 +69,21 @@ const Home = () => {
     event.preventDefault();
   }
   const mobile_touch_start = (event: TouchEvent) => {
+    home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move);
+
     const touch_y = event.changedTouches[0].pageY;
     before_scroll_y = touch_y;
 
-    home_div_ref.current?.removeEventListener('touchstart', mobile_touch_move);
     home_div_ref.current?.addEventListener('touchmove', mobile_touch_move);
   }
   const mobile_touch_move = (event: TouchEvent) => {
+    const offset = 50;
     const page_height = parseInt(document.documentElement.style.getPropertyValue('--vh').replace(/px/g, ''));
     const scroll_top = home_div_ref.current?.scrollTop ? home_div_ref.current?.scrollTop : 0;
     const scroll_y = event.changedTouches[0].pageY;
     
-    if (before_scroll_y < scroll_y) {
+    if (before_scroll_y < scroll_y - offset) {
       // 아래로 스크롤 중이면
-      before_scroll_y = scroll_y;
       if (scroll_top >= 0 && scroll_top < page_height * 2) {
         // 1번째 페이지로 이동
         home_div_ref.current?.scrollTo({
@@ -118,10 +119,11 @@ const Home = () => {
           behavior: 'smooth'
         })
       }
+
+      home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move);
     }
-    else if (before_scroll_y > scroll_y) {
+    else if (before_scroll_y > scroll_y + offset) {
       // 위로 스크롤 중이면
-      before_scroll_y = scroll_y;
       if (scroll_top >= 0 && scroll_top < page_height) {
         // 2번째 페이지로 이동
         home_div_ref.current?.scrollTo({
@@ -165,10 +167,8 @@ const Home = () => {
         // });
       }
 
+      home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move);
     }
-
-    home_div_ref.current?.addEventListener('touchstart', mobile_touch_start);
-    home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move);
   }
   
   const [a, sa] = useState<string>('0px');
