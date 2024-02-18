@@ -50,6 +50,7 @@ const Home = () => {
 
   const home_div_ref = useRef<HTMLDivElement>(null);
 
+  const [is_mobile, set_is_mobile] = useState<boolean>(false);
   const [hovered_product, set_hovered_product] = useState<string>('');
 
   const clicked_logo = () => {
@@ -172,11 +173,30 @@ const Home = () => {
   
   const [a, sa] = useState<string>('0px');
   const set_vh = () => {
+    if (window.innerWidth <= 768) set_is_mobile(true);
+    else set_is_mobile(false);
+
     document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`);
     sa(`${window.innerHeight}px`);
   }
+
+  const map_ref = useRef<HTMLElement | null | any>(null);
+  const dy_location: { latitude: number, longtitude: number } = {
+    latitude: 37.57360,
+    longtitude: 127.00450
+  }
   
   useEffect(() => {
+    map_ref.current = new naver.maps.Map('map', {
+      center: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
+      zoomControl: true,
+      zoom: 18
+    });
+    new naver.maps.Marker({
+      position: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
+      map: map_ref.current
+    });
+
     window.addEventListener('resize', set_vh);
     set_vh();
 
@@ -299,7 +319,10 @@ const Home = () => {
               <div className={style.title}>
                 <h1>The way to come</h1>
               </div>
-              <div className={style.map}>
+              <div id="map" className={style.map}>
+              </div>
+              <div>
+                <h4>ADDR: 지구</h4>
               </div>
             </div>
           </div>
@@ -313,8 +336,15 @@ const Home = () => {
               </div>
               <div className={style.form}>
                 <div className={style.left}>
-                  <h4>ADDR: 지구</h4>
-                  <h4>TEL: 010-3744-3084</h4>
+                  <h4>KAKAO: <a href="https://open.kakao.com/o/sgqi929f" target="_blank">오픈 채팅방</a></h4>
+                  {
+                    is_mobile ? (
+                      <h4>TEL: <a href="tel:010-3744-3084" target="_blank">010-3744-3084</a></h4>
+                    )
+                    : (
+                      <h4>TEL: 010-3744-3084</h4>
+                    )
+                  }
                 </div>
                 <div className={style.right}>
                   <div className={style.title}>

@@ -192,6 +192,7 @@
       .location {
         display: flex;
         flex-direction: column;
+        height: 100%;
 
         .title {
           margin-bottom: 25px;
@@ -365,6 +366,9 @@
   .location {
     .title {
       margin-bottom: 10px !important;
+    }
+    .map {
+      height: 50% !important;
     }
   }
 
