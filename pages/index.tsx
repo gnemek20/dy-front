@@ -70,7 +70,8 @@ const Home = () => {
     event.preventDefault();
   }
   const mobile_touch_start = (event: any) => {
-    console.log(event)
+    console.log("부모: ", event.target.parentNode)
+    console.log("자식: ", event.target.childNodes)
     home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move);
     
     const touch_y = event.changedTouches[0].pageY;
