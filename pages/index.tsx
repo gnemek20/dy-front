@@ -244,12 +244,12 @@ const Home = () => {
                 </div>
               </div>
               <div className={style.about_description}>
-                <h5>
+                {/* <h5>
                   주식회사 대양아이엔지는 지퍼 전문, 패션소재 기업으로서<br />
                   신뢰와 감동으로<br />
                   함께 도전하고, 함께 꿈을 이루어가는<br />
                   패션 리더 기업들의 믿음직한 파트너 입니다.
-                </h5>
+                </h5> */}
               </div>
             </div>
             <div className={style.about_bottom}>
@@ -322,7 +322,7 @@ const Home = () => {
               <div id="map" className={style.map}>
               </div>
               <div>
-                <h4>ADDR: 지구</h4>
+                <h4>ADDR: 종로구 김상옥로 59, 한아빌딩 3층</h4>
               </div>
             </div>
           </div>
