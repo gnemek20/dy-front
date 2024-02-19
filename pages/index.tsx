@@ -316,9 +316,9 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className={style.section}>
+        <div className={`${style.section} ${style.gradation}`}>
           <div className={style.section_container}>
-            <div className={style.who}>
+            {/* <div className={style.who}>
               <div className={style.left}>
 
               </div>
@@ -328,7 +328,7 @@ const Home = () => {
                   <h3>description</h3>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className={style.section}>
