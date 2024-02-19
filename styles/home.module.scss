@@ -352,7 +352,8 @@
     }
   }
   .why_reason_list {
-    display: none !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    grid-auto-rows: 1fr !important;
   }
   .who {
     display: none !important;
@@ -401,18 +402,25 @@
   }
 
   .contact {
+    height: 100% !important;
+
     .menu {
       gap: 0px !important;
       justify-content: space-between !important;
-      margin-bottom: 10px !important;
+      margin-bottom: 25px !important;
     }
     .form {
       flex-direction: column !important;
+      height: 100% !important;
       gap: 25px !important;
 
-      // .right {
-      //   display: none !important;
-      // }
+      .left {
+        gap: 15px !important;
+      }
+      .right {
+        // display: none !important;
+        padding-bottom: 0px !important;
+      }
     }
   }
 }

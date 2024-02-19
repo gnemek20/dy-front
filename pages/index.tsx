@@ -34,8 +34,8 @@ const Home = () => {
     {
       title: 'Service',
       descrtiption: [
-        `고객의 만족을 위해`,
-        `끊임없이 노력하겠습니다.`
+        `엄청난`,
+        `서비스`
       ].join('\n'),
     },
     {
@@ -186,8 +186,6 @@ const Home = () => {
   const set_vh = () => {
     if (window.innerWidth <= 768) set_is_mobile(true);
     else set_is_mobile(false);
-
-    document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`);
   }
 
   const map_ref = useRef<HTMLElement | null | any>(null);
@@ -197,7 +195,8 @@ const Home = () => {
   }
   
   useEffect(() => {
-    // window.addEventListener('resize', set_vh);
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`);
+    window.addEventListener('resize', set_vh);
     set_vh();
 
     home_div_ref.current?.addEventListener('touchmove', mobile_touch_move_prevent);
@@ -208,15 +207,15 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    map_ref.current = new naver.maps.Map('map', {
-      center: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
-      zoomControl: true,
-      zoom: 15
-    });
-    new naver.maps.Marker({
-      position: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
-      map: map_ref.current
-    });
+    // map_ref.current = new naver.maps.Map('map', {
+    //   center: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
+    //   zoomControl: true,
+    //   zoom: 15
+    // });
+    // new naver.maps.Marker({
+    //   position: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
+    //   map: map_ref.current
+    // });
   }, [ is_mobile ]);
 
   return (
