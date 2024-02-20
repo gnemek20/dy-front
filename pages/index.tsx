@@ -195,7 +195,9 @@ const Home = () => {
     longtitude: 127.00450
   }
   
+  const [a, sa] = useState<number>(0);
   useEffect(() => {
+    sa(window.innerHeight);
     document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`);
     window.addEventListener('resize', set_vh);
     set_vh();
@@ -237,7 +239,8 @@ const Home = () => {
       </div>
       <div className={style.body}>
         <div className={style.banner}>
-          <h1>이곳에 배너가 들어가요!</h1>
+          {/* <h1>이곳에 배너가 들어가요!</h1> */}
+          <h1>{ a }</h1>
         </div>
         <div className={`${style.section} ${style.about}`}>
           <div className={style.section_container}>
