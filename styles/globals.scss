@@ -57,8 +57,8 @@ a:visited {
   }
 
   .home {
-    height: 100vh !important;
-    // height: var(--vh) !important;
+    // height: 100vh !important;
+    height: var(--vh) !important;
     // height: -webkit-fill-available !important;
     overflow-y: auto;
   }
