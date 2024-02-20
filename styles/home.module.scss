@@ -241,6 +241,7 @@
             display: flex;
             flex-direction: column;
             padding: 5px;
+            padding-bottom: 0px;
             gap: 5px;
           }
           .right {
@@ -248,6 +249,7 @@
             display: flex;
             flex-direction: column;
             padding: 5px;
+            padding-bottom: 0px;
             
             .title {
               margin-bottom: 20px;
@@ -429,10 +431,9 @@
       .left {
         gap: 15px !important;
       }
-      .right {
-        // display: none !important;
-        padding-bottom: 0px !important;
-      }
+      // .right {
+      //   // display: none !important;
+      // }
     }
   }
 }
