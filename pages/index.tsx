@@ -1,7 +1,6 @@
 import { StaticImport } from "next/dist/shared/lib/get-img-props"
 import Image from "next/image"
-// import style from "@/styles/home.module.scss"
-import style from "@/styles/home.save.module.scss"
+import style from "@/styles/home.module.scss"
 import { useEffect, useRef, useState } from "react";
 
 const Home = () => {
