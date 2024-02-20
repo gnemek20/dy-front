@@ -186,6 +186,8 @@ const Home = () => {
   const set_vh = () => {
     if (window.innerWidth <= 768) set_is_mobile(true);
     else set_is_mobile(false);
+
+    document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`);
   }
 
   const map_ref = useRef<HTMLElement | null | any>(null);
@@ -195,8 +197,7 @@ const Home = () => {
   }
   
   useEffect(() => {
-    document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`);
-    window.addEventListener('resize', set_vh);
+    // window.addEventListener('resize', set_vh);
     set_vh();
 
     home_div_ref.current?.addEventListener('touchmove', mobile_touch_move_prevent);
