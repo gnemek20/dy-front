@@ -224,7 +224,7 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
   }, [ is_mobile ]);
 
   return (
-    <div ref={home_div_ref} className={`home ${user_agent.includes('safari') && 'safari'}`} onTouchStart={(event) => mobile_touch_start(event)}>
+    <div ref={home_div_ref} className={`home ${user_agent.includes('safari') ? 'safari' : 'samsung'}`} onTouchStart={(event) => mobile_touch_start(event)}>
       <div className={style.header}>
         <div className={style.header_container}>
           <div className={style.header_title} onClick={clicked_logo}>

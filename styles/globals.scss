@@ -64,6 +64,9 @@ a:visited {
   .home::-webkit-scrollbar {
     display: none;
   }
+  .samsung {
+    height: 100vh !important;
+  }
   .safari {
     height: var(--vh) !important;
   }
