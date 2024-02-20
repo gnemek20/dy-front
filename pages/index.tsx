@@ -202,7 +202,7 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
     window.addEventListener('resize', set_vh);
     set_vh();
     
-    set_user_agent(serverSideProps.userAgent);
+    set_user_agent(serverSideProps.userAgent.toLowerCase());
 
     home_div_ref.current?.addEventListener('touchmove', mobile_touch_move_prevent);
     return () => {
