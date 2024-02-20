@@ -1,9 +1,10 @@
 import { StaticImport } from "next/dist/shared/lib/get-img-props"
+import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import Image from "next/image"
 import style from "@/styles/home.module.scss"
 import { useEffect, useRef, useState } from "react";
 
-const Home = () => {
+const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   type image_type = StaticImport;
   type menu_list_type = 'Home' | 'About' | 'Contact';
   type product_list_type = '지퍼' | '주머니' | '단추';
@@ -50,6 +51,7 @@ const Home = () => {
 
   const home_div_ref = useRef<HTMLDivElement>(null);
 
+  const [user_agent, set_user_agent] = useState<string>('');
   const [is_mobile, set_is_mobile] = useState<boolean>(false);
   const [hovered_product, set_hovered_product] = useState<string>('');
   const [touched_product, set_touched_product] = useState<string>('');
@@ -199,6 +201,8 @@ const Home = () => {
     document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`);
     window.addEventListener('resize', set_vh);
     set_vh();
+    
+    set_user_agent(serverSideProps.userAgent);
 
     home_div_ref.current?.addEventListener('touchmove', mobile_touch_move_prevent);
     return () => {
@@ -220,7 +224,7 @@ const Home = () => {
   }, [ is_mobile ]);
 
   return (
-    <div ref={home_div_ref} className="home" onTouchStart={(event) => mobile_touch_start(event)}>
+    <div ref={home_div_ref} className={`home ${user_agent.includes('safari') && 'safari'}`} onTouchStart={(event) => mobile_touch_start(event)}>
       <div className={style.header}>
         <div className={style.header_container}>
           <div className={style.header_title} onClick={clicked_logo}>
@@ -397,6 +401,20 @@ const Home = () => {
       </div>
     </div>
   );
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  try {
+    const userAgent = context ? context.req.headers['user-agent']: navigator.userAgent;
+    return {
+      props: {userAgent}
+    }
+  }
+  catch (error) {
+    return {
+      props: {}
+    }
+  }
 }
 
 export default Home;
