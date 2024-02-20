@@ -373,13 +373,11 @@
     // height: calc(100vh - 60px) !important;
     // height: calc(var(--vh) - 60px) !important;
     // height: 100vh !important;
-    // height: var(--vh) !important;
-    height: -webkit-fill-available !important;
+    height: var(--vh) !important;
+    // height: -webkit-fill-available !important;
   }
 
   .gradation {
-    // height: var(--vh) !important;
-    height: 100% !important;
     box-shadow: inset 0px 0px 500px 10px var(--white) !important;
     // box-shadow: none !important;
   }
