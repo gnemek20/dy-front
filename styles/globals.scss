@@ -23,6 +23,15 @@
   align-items: center;
 }
 
+.flicking-viewport {
+  overflow: hidden;
+  height: 100%;
+}
+.flicking-camera {
+  display: flex;
+  height: 100%;
+}
+
 a {
   text-decoration: none;
   color: blue;

@@ -3,6 +3,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import Image from "next/image"
 import style from "@/styles/home.module.scss"
 import { useEffect, useRef, useState } from "react";
+import Flicking, { MoveEvent, WillChangeEvent } from "@egjs/react-flicking"
 
 const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   type image_type = StaticImport;
@@ -18,10 +19,30 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
     title: reason_list_type,
     descrtiption: string,
   }
+  interface introduceProps {
+    title: string,
+    description: string,
+    image: image_props
+  }
 
   const logo_image: image_props = {
     name: 'logo',
     image: require("@/public/images/DY.svg"),
+  }
+
+  const introduce_image: image_props = {
+    name: 'introduce',
+    image: require("@/public/images/introduce_back.jpg"),
+  }
+
+  const planetImage: image_props = {
+    name: 'planet',
+    image: require('@/public/planet.svg')
+  }
+
+  const unitedImage: image_props = {
+    name: 'united',
+    image: require('@/public/united.svg')
   }
 
   const header_menu_list: Array<menu_list_type> = ['Home', 'About', 'Contact'];
@@ -48,6 +69,19 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
       descrtiption: 'Dummy2',
     }
   ];
+
+  const introduceDayangList: Array<introduceProps> = [
+    {
+      title: '임시 제목',
+      description: '임시 설명',
+      image: planetImage
+    },
+    {
+      title: '임시2',
+      description: '임시2',
+      image: unitedImage
+    }
+  ]
 
   const home_div_ref = useRef<HTMLDivElement>(null);
 
@@ -213,15 +247,15 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
   }, []);
 
   useEffect(() => {
-    map_ref.current = new naver.maps.Map('map', {
-      center: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
-      zoomControl: true,
-      zoom: 15
-    });
-    new naver.maps.Marker({
-      position: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
-      map: map_ref.current
-    });
+    // map_ref.current = new naver.maps.Map('map', {
+    //   center: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
+    //   zoomControl: true,
+    //   zoom: 15
+    // });
+    // new naver.maps.Marker({
+    //   position: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
+    //   map: map_ref.current
+    // });
   }, [ is_mobile ]);
 
   return (
@@ -322,19 +356,40 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
             </div>
           </div>
         </div>
-        <div className={`${style.section} ${style.gradation}`}>
-          <div className={style.section_container}>
-            {/* <div className={style.who}>
-              <div className={style.left}>
-
-              </div>
-              <div className={style.right}>
-                <div className={style.introduce}>
-                  <h1>Who make It?</h1>
-                  <h3>description</h3>
-                </div>
-              </div>
-            </div> */}
+        <div className={`${style.section} ${style.section_introduce}`}>
+          <Image className={style.introduce_image} src={introduce_image.image} alt={introduce_image.name} />
+          <div className={`${style.section_container} ${style.introduceContainer}`}>
+            <div className={`${style.zIndex} ${style.introduceTitle}`}>
+              <h1>이거 왜 안 보임?</h1>
+            </div>
+            <Flicking
+              align={"prev"}
+              duration={500}
+              defaultIndex={0}
+              // onMove={(event: MoveEvent) => {}}
+              // onWillChange={(event: WillChangeEvent) => {}}
+            >
+              {
+                introduceDayangList.map((introduce) => (
+                  <div className={style.panel}>
+                    <div className={style.panelImage}>
+                      <Image src={introduce.image.image} alt={introduce.image.name}></Image>
+                    </div>
+                    <div className={style.panelIntroduce}>
+                      <h2>{introduce.title}</h2>
+                      <h4>{introduce.description}</h4>
+                    </div>
+                  </div>
+                ))
+              }
+            </Flicking>
+            <div className={`${style.zIndex} ${style.introduceLabel}`}>
+              {
+                introduceDayangList.map(() => (
+                  <div className={style.panelButton}></div>
+                ))
+              }
+            </div>
           </div>
         </div>
         <div className={style.section}>
