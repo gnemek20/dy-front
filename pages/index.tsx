@@ -370,8 +370,8 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
               // onWillChange={(event: WillChangeEvent) => {}}
             >
               {
-                introduceDayangList.map((introduce) => (
-                  <div className={style.panel}>
+                introduceDayangList.map((introduce, index) => (
+                  <div className={style.panel} key={index}>
                     <div className={style.panelImage}>
                       <Image src={introduce.image.image} alt={introduce.image.name}></Image>
                     </div>
@@ -385,8 +385,8 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
             </Flicking>
             <div className={`${style.zIndex} ${style.introduceLabel}`}>
               {
-                introduceDayangList.map(() => (
-                  <div className={style.panelButton}></div>
+                introduceDayangList.map((introduce, index) => (
+                  <div className={style.panelButton} key={index}></div>
                 ))
               }
             </div>
