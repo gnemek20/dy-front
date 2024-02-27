@@ -410,7 +410,7 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
               </div>
               {
                 !is_mobile ? (
-                  <h4>주소: 종로구 김상옥로 59, 한아빌딩 3층</h4>
+                  <h4>주소: 서울특별시 종로구 김상옥로 59, 한아빌딩 3층</h4>
                 )
                 : (
                   <div className={style.mapUnder}>
@@ -418,7 +418,7 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
                       <h2>대양ING</h2>
                       <div>
                         <h3>주소</h3>
-                        <h4>종로구 김상옥로 59, 한아빌딩 3층</h4>
+                        <h4>서울특별시 종로구 김상옥로 59, 한아빌딩 3층</h4>
                       </div>
                       <div>
                         <h3>운영시간</h3>
