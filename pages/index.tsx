@@ -133,7 +133,7 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
     else if (event.target.className.includes('home') || ['h1', 'h2', 'h3', 'h4', 'h5', 'input', 'textarea'].includes(event.target.tagName.toLowerCase())) home_div_ref.current?.addEventListener('touchmove', mobile_touch_move);
   }
   const mobile_touch_move = (event: TouchEvent) => {
-    const offset = 100;
+    const offset = 50;
     const page_height = parseInt(document.documentElement.style.getPropertyValue('--vh').replace(/px/g, ''));
     const scroll_top = home_div_ref.current?.scrollTop ? home_div_ref.current?.scrollTop : 0;
     const scroll_y = event.changedTouches[0].pageY;
@@ -255,15 +255,15 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
   }, []);
 
   useEffect(() => {
-    map_ref.current = new naver.maps.Map('map', {
-      center: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
-      zoomControl: true,
-      zoom: is_mobile ? 15 : 16
-    });
-    new naver.maps.Marker({
-      position: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
-      map: map_ref.current
-    });
+    // map_ref.current = new naver.maps.Map('map', {
+    //   center: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
+    //   zoomControl: true,
+    //   zoom: is_mobile ? 15 : 16
+    // });
+    // new naver.maps.Marker({
+    //   position: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
+    //   map: map_ref.current
+    // });
   }, [ is_mobile ]);
 
   return (
