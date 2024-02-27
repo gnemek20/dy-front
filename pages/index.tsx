@@ -282,7 +282,7 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
 
   return (
     // <div ref={home_div_ref} className={`home ${user_agent.includes('safari') ? 'safari' : 'samsung'}`} onTouchStart={(event) => mobile_touch_start(event)}>
-    <div id="mainPage" ref={home_div_ref} className={`home ${user_agent.includes('safari') ? 'safari' : 'samsung'}`} onTouchStart={(event) => mobile_touch_start(event)} onTouchMove={(event) => mobile_touch_move(event)}>
+    <div id="mainPage" ref={home_div_ref} className={`home ${user_agent.includes('iphone') ? 'iphone' : 'galaxy'}`} onTouchStart={(event) => mobile_touch_start(event)} onTouchMove={(event) => mobile_touch_move(event)}>
       {
         isShowModal && (
           <div className={style.modal} onClick={clickedModal}>

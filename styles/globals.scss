@@ -45,6 +45,7 @@ a:visited {
   margin: 0;
   word-break: keep-all;
   white-space: pre-line;
+  touch-action: none;
   -webkit-tap-highlight-color: transparent !important;
 }
 
@@ -75,10 +76,10 @@ a:visited {
   .home::-webkit-scrollbar {
     display: none;
   }
-  .samsung {
+  .galaxy {
     height: 100vh !important;
   }
-  .safari {
+  .iphone {
     height: var(--vh) !important;
   }
 }
