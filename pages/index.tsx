@@ -255,15 +255,15 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
   }, []);
 
   useEffect(() => {
-    // map_ref.current = new naver.maps.Map('map', {
-    //   center: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
-    //   zoomControl: true,
-    //   zoom: 15
-    // });
-    // new naver.maps.Marker({
-    //   position: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
-    //   map: map_ref.current
-    // });
+    map_ref.current = new naver.maps.Map('map', {
+      center: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
+      zoomControl: true,
+      zoom: 15
+    });
+    new naver.maps.Marker({
+      position: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
+      map: map_ref.current
+    });
   }, [ is_mobile ]);
 
   return (
