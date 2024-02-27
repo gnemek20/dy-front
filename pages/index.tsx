@@ -408,9 +408,30 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
               </div>
               <div id="map" className={style.map}>
               </div>
-              <div>
-                <h4>ADDR: 종로구 김상옥로 59, 한아빌딩 3층</h4>
-              </div>
+              {
+                !is_mobile ? (
+                  <h4>주소: 종로구 김상옥로 59, 한아빌딩 3층</h4>
+                )
+                : (
+                  <div className={style.mapUnder}>
+                    <div className={style.area}>
+                      <h2>대양ING</h2>
+                      <div>
+                        <h3>주소</h3>
+                        <h4>종로구 김상옥로 59, 한아빌딩 3층</h4>
+                      </div>
+                      <div>
+                        <h3>운영시간</h3>
+                        <h4>매일 - 오후 3:00 ~ 익일 새벽 3:00</h4>
+                      </div>
+                      <div>
+                        <h3>휴무일</h3>
+                        <h4>연중무휴</h4>
+                      </div>
+                    </div>
+                  </div>
+                )
+              }
             </div>
           </div>
         </div>
