@@ -18,6 +18,7 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
   interface reason_list_props {
     title: reason_list_type,
     descrtiption: string,
+    detail: string
   }
   interface introduceProps {
     title: string,
@@ -51,7 +52,8 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
   const why_reason_list: Array<reason_list_props> = [
     {
       title: 'Perfection',
-      descrtiption: '일단은 아무말이나 막 채워둔 다음에 워딩은 다음번에 생각하면 됨. 대충 어떤식으로 나오는지 확인하기 위함임!'
+      descrtiption: '일단은 아무말이나 막 채워둔 다음에 워딩은 다음번에 생각하면 됨. 대충 어떤식으로 나오는지 확인하기 위함임!',
+      detail: '개쩌는 상세설명'
     },
     {
       title: 'Service',
@@ -59,14 +61,17 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
         `엄청난`,
         `서비스`
       ].join('\n'),
+      detail: '개쩌는 상세설명1'
     },
     {
       title: 'Dummy',
       descrtiption: 'Dummy1',
+      detail: '개쩌는 상세설명2'
     },
     {
       title: 'Dummy',
       descrtiption: 'Dummy2',
+      detail: '개쩌는 상세설명3'
     }
   ];
 
@@ -88,9 +93,11 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
 
   const [user_agent, set_user_agent] = useState<string>('');
   const [is_mobile, set_is_mobile] = useState<boolean>(false);
+  const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const [hovered_product, set_hovered_product] = useState<string>('');
   const [touched_product, set_touched_product] = useState<string>('');
   const [selectedPanel, setSelectedPanel] = useState<string>('');
+  const [selectedWhyReason, setSelectedWhyReason] = useState<number>(0);
 
   const clicked_logo = () => {
     window.location.reload();
@@ -116,6 +123,11 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
   const clickedPanelButton = (panelIndex: number) => {
     setSelectedPanel(introduceDayangList[panelIndex].title);
     if (!flickingRef.current?.animating) flickingRef.current?.moveTo(panelIndex);
+  }
+
+  const clickedWhyReason = (whyReasonIndex: number) => {
+    setSelectedWhyReason(whyReasonIndex);
+    setIsShowModal(true);
   }
 
   let before_scroll_y = 0;
@@ -268,6 +280,19 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
 
   return (
     <div ref={home_div_ref} className={`home ${user_agent.includes('safari') ? 'safari' : 'samsung'}`} onTouchStart={(event) => mobile_touch_start(event)}>
+      {
+        isShowModal && (
+          <div className={style.modal} onClick={() => setIsShowModal(false)}>
+            <div className={style.modalWrapper}>
+              <div className={style.modalContent}>
+                <h1>{why_reason_list[selectedWhyReason].title}</h1>
+                <hr />
+                <h4>{why_reason_list[selectedWhyReason].detail}</h4>
+              </div>
+            </div>
+          </div>
+        )
+      }
       <div className={style.header}>
         <div className={style.header_container}>
           <div className={style.header_title} onClick={clicked_logo}>
@@ -354,7 +379,7 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
             <div className={style.why_reason_list}>
               {
                 why_reason_list.map((reason, index) => (
-                  <div className={style.reason} key={index}>
+                  <div className={style.reason} key={index} onClick={() => clickedWhyReason(index)}>
                     <h2>{reason.title}</h2>
                     <hr />
                     <h4>{reason.descrtiption}</h4>
@@ -440,7 +465,7 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
             <div className={style.contact}>
               <div className={style.menu}>
                 <h3>Contact Us</h3>
-                <h3>Get Support</h3>
+                <h3>License</h3>
               </div>
               <div className={style.form}>
                 <div className={style.left}>
@@ -455,7 +480,7 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
                   }
                 </div>
                 <div className={style.right}>
-                  <div className={style.title}>
+                  {/* <div className={style.title}>
                     <h1>Form</h1>
                     <h5>Send us a message and we{"\'"}ll get back to you as soon as we can!</h5>
                   </div>
@@ -465,14 +490,17 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
                       <input type="text" placeholder="Enter your name" />
                     </div>
                     <div className={style.email}>
-                      <h4>Phone Number</h4>
-                      <input type="tel" placeholder="Enter your phone number" />
+                      <h4>Email</h4>
+                      <input type="tel" placeholder="Enter your email Address" />
                     </div>
                     <div className={style.message}>
                       <h4>Message</h4>
-                      <textarea rows={10}></textarea>
+                      <textarea rows={is_mobile ? 5 : 10}></textarea>
                     </div>
-                  </div>
+                    <div className={style.button}>
+                      <button>submit</button>
+                    </div>
+                  </div> */}
                 </div>
               </div>
             </div>
