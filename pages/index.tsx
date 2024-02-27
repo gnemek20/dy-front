@@ -143,9 +143,10 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
     const touch_y = event.changedTouches[0].pageY;
     setTouchedScrollY(touch_y);
     
-    if (!(serverSideProps.userAgent.toLowerCase().includes('safari') || serverSideProps.userAgent.toLowerCase().includes('samsung'))) setIsLockScroll(true);
-    else if (event.target.className.includes('map')) setIsLockScroll(true);
-    else if (event.target.className.includes('home') || ['h1', 'h2', 'h3', 'h4', 'h5', 'input', 'textarea'].includes(event.target.tagName.toLowerCase())) setIsLockScroll(false);
+    // if (!(serverSideProps.userAgent.toLowerCase().includes('safari') || serverSideProps.userAgent.toLowerCase().includes('samsung'))) setIsLockScroll(true);
+    // else if (event.target.className.includes('map')) setIsLockScroll(true);
+    if (event.target.className.includes('home') || ['h1', 'h2', 'h3', 'h4', 'h5', 'input', 'textarea'].includes(event.target.tagName.toLowerCase())) setIsLockScroll(false);
+    else setIsLockScroll(true);
   }
   const mobile_touch_move = async(event: any) => {
     if (isShowModal || isLockScroll) return;
