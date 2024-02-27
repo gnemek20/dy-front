@@ -2,8 +2,8 @@ import { StaticImport } from "next/dist/shared/lib/get-img-props"
 import { GetServerSideProps, InferGetServerSidePropsType } from "next"
 import Image from "next/image"
 import style from "@/styles/home.module.scss"
-import { useEffect, useRef, useState } from "react";
-import Flicking, { MoveEvent, WillChangeEvent } from "@egjs/react-flicking"
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import Flicking, { MoveEvent, PanelChangeEvent, WillChangeEvent } from "@egjs/react-flicking"
 
 const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   type image_type = StaticImport;
@@ -84,11 +84,13 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
   ]
 
   const home_div_ref = useRef<HTMLDivElement>(null);
+  const flickingRef = useRef<Flicking>(null);
 
   const [user_agent, set_user_agent] = useState<string>('');
   const [is_mobile, set_is_mobile] = useState<boolean>(false);
   const [hovered_product, set_hovered_product] = useState<string>('');
   const [touched_product, set_touched_product] = useState<string>('');
+  const [selectedPanel, setSelectedPanel] = useState<string>('');
 
   const clicked_logo = () => {
     window.location.reload();
@@ -111,6 +113,11 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
     else set_touched_product(product);
   }
 
+  const clickedPanelButton = (panelIndex: number) => {
+    setSelectedPanel(introduceDayangList[panelIndex].title);
+    if (!flickingRef.current?.animating) flickingRef.current?.moveTo(panelIndex);
+  }
+
   let before_scroll_y = 0;
   const mobile_touch_move_prevent = (event: TouchEvent) => {
     if (serverSideProps.userAgent.toLowerCase().includes('safari') || serverSideProps.userAgent.toLowerCase().includes('samsung')) event.preventDefault();
@@ -126,7 +133,7 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
     else if (event.target.className.includes('home') || ['h1', 'h2', 'h3', 'h4', 'h5', 'input', 'textarea'].includes(event.target.tagName.toLowerCase())) home_div_ref.current?.addEventListener('touchmove', mobile_touch_move);
   }
   const mobile_touch_move = (event: TouchEvent) => {
-    const offset = 50;
+    const offset = 100;
     const page_height = parseInt(document.documentElement.style.getPropertyValue('--vh').replace(/px/g, ''));
     const scroll_top = home_div_ref.current?.scrollTop ? home_div_ref.current?.scrollTop : 0;
     const scroll_y = event.changedTouches[0].pageY;
@@ -238,6 +245,7 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
     set_vh();
     
     set_user_agent(serverSideProps.userAgent.toLowerCase());
+    setSelectedPanel(introduceDayangList[0].title);
 
     home_div_ref.current?.addEventListener('touchmove', mobile_touch_move_prevent);
     return () => {
@@ -360,14 +368,14 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
           <Image className={style.introduce_image} src={introduce_image.image} alt={introduce_image.name} />
           <div className={`${style.section_container} ${style.introduceContainer}`}>
             <div className={`${style.zIndex} ${style.introduceTitle}`}>
-              <h1>이거 왜 안 보임?</h1>
+              <h1>Merit of DY</h1>
             </div>
             <Flicking
-              align={"prev"}
+              // align={"prev"}
+              ref={flickingRef}
               duration={500}
               defaultIndex={0}
-              // onMove={(event: MoveEvent) => {}}
-              // onWillChange={(event: WillChangeEvent) => {}}
+              onChanged={(event) => clickedPanelButton(event.index)}
             >
               {
                 introduceDayangList.map((introduce, index) => (
@@ -386,7 +394,7 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
             <div className={`${style.zIndex} ${style.introduceLabel}`}>
               {
                 introduceDayangList.map((introduce, index) => (
-                  <div className={style.panelButton} key={index}></div>
+                  <div className={`${style.panelButton} ${(selectedPanel === introduce.title) && style.selectedPanelButton}`} onClick={() => clickedPanelButton(index)} key={index}></div>
                 ))
               }
             </div>
