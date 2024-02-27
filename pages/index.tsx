@@ -94,10 +94,12 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
   const [user_agent, set_user_agent] = useState<string>('');
   const [is_mobile, set_is_mobile] = useState<boolean>(false);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
+  const [isLockScroll, setIsLockScroll] = useState<boolean>(false);
   const [hovered_product, set_hovered_product] = useState<string>('');
   const [touched_product, set_touched_product] = useState<string>('');
   const [selectedPanel, setSelectedPanel] = useState<string>('');
   const [selectedWhyReason, setSelectedWhyReason] = useState<number>(0);
+  const [touchedScrollY, setTouchedScrollY] = useState<number>(0);
 
   const clicked_logo = () => {
     window.location.reload();
@@ -126,31 +128,36 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
   }
 
   const clickedWhyReason = (whyReasonIndex: number) => {
+    if (!is_mobile) document.body.style.overflow = 'hidden';
+
     setSelectedWhyReason(whyReasonIndex);
     setIsShowModal(true);
   }
 
-  let before_scroll_y = 0;
-  const mobile_touch_move_prevent = (event: TouchEvent) => {
-    if (serverSideProps.userAgent.toLowerCase().includes('safari') || serverSideProps.userAgent.toLowerCase().includes('samsung')) event.preventDefault();
+  const clickedModal = () => {
+    if (!is_mobile) document.body.style.overflow = "auto";
+    setIsShowModal(false);
   }
+
   const mobile_touch_start = (event: any) => {
-    home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move);
-    
     const touch_y = event.changedTouches[0].pageY;
-    before_scroll_y = touch_y;
+    setTouchedScrollY(touch_y);
     
-    if (!(serverSideProps.userAgent.toLowerCase().includes('safari') || serverSideProps.userAgent.toLowerCase().includes('samsung'))) return;
-    else if (event.target.className.includes('map')) return;
-    else if (event.target.className.includes('home') || ['h1', 'h2', 'h3', 'h4', 'h5', 'input', 'textarea'].includes(event.target.tagName.toLowerCase())) home_div_ref.current?.addEventListener('touchmove', mobile_touch_move);
+    if (!(serverSideProps.userAgent.toLowerCase().includes('safari') || serverSideProps.userAgent.toLowerCase().includes('samsung'))) setIsLockScroll(true);
+    else if (event.target.className.includes('map')) setIsLockScroll(true);
+    else setIsLockScroll(false);
   }
-  const mobile_touch_move = (event: TouchEvent) => {
+  const mobile_touch_move = async(event: any) => {
+    if (isShowModal || isLockScroll) return;
+
     const offset = 50;
     const page_height = parseInt(document.documentElement.style.getPropertyValue('--vh').replace(/px/g, ''));
     const scroll_top = home_div_ref.current?.scrollTop ? home_div_ref.current?.scrollTop : 0;
     const scroll_y = event.changedTouches[0].pageY;
+
+    if (scroll_top % page_height !== 0) return;
     
-    if (before_scroll_y < scroll_y - offset) {
+    if (touchedScrollY < scroll_y - offset) {
       // 아래로 스크롤 중이면
       if (scroll_top >= 0 && scroll_top < page_height * 2) {
         // 1번째 페이지로 이동
@@ -187,10 +194,8 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
           behavior: 'smooth'
         })
       }
-
-      home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move);
     }
-    else if (before_scroll_y > scroll_y + offset) {
+    else if (touchedScrollY > scroll_y + offset) {
       // 위로 스크롤 중이면
       if (scroll_top >= 0 && scroll_top < page_height) {
         // 2번째 페이지로 이동
@@ -234,8 +239,6 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
         //   behavior: 'smooth'
         // });
       }
-
-      home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move);
     }
   }
   
@@ -258,31 +261,26 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
     
     set_user_agent(serverSideProps.userAgent.toLowerCase());
     setSelectedPanel(introduceDayangList[0].title);
-
-    home_div_ref.current?.addEventListener('touchmove', mobile_touch_move_prevent);
-    return () => {
-      window.removeEventListener('resize', set_vh);
-      home_div_ref.current?.removeEventListener('touchmove', mobile_touch_move_prevent);
-    };
   }, []);
 
   useEffect(() => {
-    // map_ref.current = new naver.maps.Map('map', {
-    //   center: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
-    //   zoomControl: true,
-    //   zoom: is_mobile ? 15 : 16
-    // });
-    // new naver.maps.Marker({
-    //   position: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
-    //   map: map_ref.current
-    // });
+    map_ref.current = new naver.maps.Map('map', {
+      center: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
+      zoomControl: true,
+      zoom: is_mobile ? 15 : 16
+    });
+    new naver.maps.Marker({
+      position: new naver.maps.LatLng(dy_location.latitude, dy_location.longtitude),
+      map: map_ref.current
+    });
   }, [ is_mobile ]);
 
   return (
-    <div ref={home_div_ref} className={`home ${user_agent.includes('safari') ? 'safari' : 'samsung'}`} onTouchStart={(event) => mobile_touch_start(event)}>
+    // <div ref={home_div_ref} className={`home ${user_agent.includes('safari') ? 'safari' : 'samsung'}`} onTouchStart={(event) => mobile_touch_start(event)}>
+    <div ref={home_div_ref} className={`home ${user_agent.includes('safari') ? 'safari' : 'samsung'}`} onTouchStart={(event) => mobile_touch_start(event)} onTouchMove={(event) => mobile_touch_move(event)}>
       {
         isShowModal && (
-          <div className={style.modal} onClick={() => setIsShowModal(false)}>
+          <div className={style.modal} onClick={clickedModal}>
             <div className={style.modalWrapper}>
               <div className={style.modalContent}>
                 <h1>{why_reason_list[selectedWhyReason].title}</h1>
