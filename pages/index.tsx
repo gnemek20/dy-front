@@ -91,6 +91,8 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
   const home_div_ref = useRef<HTMLDivElement>(null);
   const flickingRef = useRef<Flicking>(null);
 
+  const [isSectionScroll, setIsSectionScroll] = useState<boolean>(false);
+
   const [user_agent, set_user_agent] = useState<string>('');
   const [is_mobile, set_is_mobile] = useState<boolean>(false);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
@@ -143,9 +145,9 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
     const touch_y = event.changedTouches[0].pageY;
     setTouchedScrollY(touch_y);
     
-    // if (!(serverSideProps.userAgent.toLowerCase().includes('safari') || serverSideProps.userAgent.toLowerCase().includes('samsung'))) setIsLockScroll(true);
+    if (!(serverSideProps.userAgent.toLowerCase().includes('safari') || serverSideProps.userAgent.toLowerCase().includes('samsung'))) setIsLockScroll(false);
     // else if (event.target.className.includes('map')) setIsLockScroll(true);
-    if (event.target.className.includes('home') || ['h1', 'h2', 'h3', 'h4', 'h5', 'input', 'textarea'].includes(event.target.tagName.toLowerCase())) setIsLockScroll(false);
+    else if (event.target.className.includes('home') || ['h1', 'h2', 'h3', 'h4', 'h5', 'input', 'textarea'].includes(event.target.tagName.toLowerCase())) setIsLockScroll(false);
     else setIsLockScroll(true);
   }
   const mobile_touch_move = async(event: any) => {
@@ -256,6 +258,8 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
   }
   
   useEffect(() => {
+    if (serverSideProps.userAgent.toLowerCase().includes('safari') || serverSideProps.userAgent.toLowerCase().includes('samsung')) setIsSectionScroll(true);
+
     document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`);
     window.addEventListener('resize', set_vh);
     set_vh();
@@ -278,7 +282,7 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
 
   return (
     // <div ref={home_div_ref} className={`home ${user_agent.includes('safari') ? 'safari' : 'samsung'}`} onTouchStart={(event) => mobile_touch_start(event)}>
-    <div ref={home_div_ref} className={`home ${user_agent.includes('safari') ? 'safari' : 'samsung'}`} onTouchStart={(event) => mobile_touch_start(event)} onTouchMove={(event) => mobile_touch_move(event)}>
+    <div id="mainPage" ref={home_div_ref} className={`home ${user_agent.includes('safari') ? 'safari' : 'samsung'}`} onTouchStart={(event) => mobile_touch_start(event)} onTouchMove={(event) => mobile_touch_move(event)}>
       {
         isShowModal && (
           <div className={style.modal} onClick={clickedModal}>
@@ -308,7 +312,8 @@ const Home = (serverSideProps: InferGetServerSidePropsType<typeof getServerSideP
       </div>
       <div className={style.body}>
         <div className={style.banner}>
-          <h1>이곳에 배너가 들어가요!</h1>
+          {/* <h1>이곳에 배너가 들어가요!</h1> */}
+          <h1>{user_agent}</h1>
         </div>
         <div className={`${style.section} ${style.about}`}>
           <div className={style.section_container}>
